@@ -1,3 +1,5 @@
+//Diffculties Functions
+
 int Easy_difficulty(node* head)
 {
 	node* current = head;
