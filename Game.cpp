@@ -136,7 +136,7 @@ label1:
 		cout << "invalid try againg\n";
 		goto label1;
 	}
-	else if (board[move - 1] == 1)
+	else if (board[move-1] == 1|| board[move - 1] == -1)
 	{
 		cout << "invalid try again\n";
 		goto label1;
