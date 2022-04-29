@@ -126,17 +126,31 @@ void computerMove(int board[9])
 
 void playerMove(int board[9])
 {
+	char move1;
 	int move;
 label1:
 	cout << "Please enter a number from 1 to 9: ";
-	cin >> move;
+	cin.ignore();
+	cin >> move1;
+	if (!isdigit(move1))
+	{
+		if (move1 == '-')
+		{
+			cout << "invalid input\n";
+			cin.ignore();
+			goto label1;
+		}
+		cout << "invalid input please enter a number from 1 to 9\n";
+		goto label1;
+	}
+	move = move1 - '0';
 	cout << "\n";
 	if (move > 9 || move < 1)
 	{
-		cout << "invalid try againg\n";
+		cout << "invalid try again\n";
 		goto label1;
 	}
-	else if (board[move-1] == 1|| board[move - 1] == -1)
+	else if (board[move - 1] == 1 || board[move - 1] == -1)
 	{
 		cout << "invalid try again\n";
 		goto label1;
