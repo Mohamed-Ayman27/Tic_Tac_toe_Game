@@ -147,12 +147,12 @@ label1:
 	cout << "\n";
 	if (move > 9 || move < 1)
 	{
-		cout << "invalid try again\n";
+		cout << "invalid enter from 1 to 9 try again\n";
 		goto label1;
 	}
 	else if (board[move - 1] == 1 || board[move - 1] == -1)
 	{
-		cout << "invalid try again\n";
+		cout << "invalid reserved location try again\n";
 		goto label1;
 	}
 	else
