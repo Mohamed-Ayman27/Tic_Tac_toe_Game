@@ -471,3 +471,251 @@ label1:
 		board[move - 1] = -1;
 	}
 }
+int main()
+{
+
+	double start = clock();     //This is for calculation Time execution
+
+	node* head = NULL;
+	insert_at_position(&head, '1', 0);
+	insert_at_position(&head, '2', 1);
+	insert_at_position(&head, '3', 2);
+	insert_at_position(&head, '4', 3);
+	insert_at_position(&head, '5', 4);
+	insert_at_position(&head, '6', 5);
+	insert_at_position(&head, '7', 6);
+	insert_at_position(&head, '8', 7);
+	insert_at_position(&head, '9', 8);
+	display(head);
+
+	int select;
+	int type;
+	std::cout << "\nFor Single-player press '1' : \n";
+	std::cout << "\nFor Multi-player press '2' : \n";
+	cout << "  \n Your Selection : ";
+	cin >> type;
+	if (type == 1)
+	{
+		char diff1;
+		int diff;
+		std::cout << "\nFor Difficulty :\n  -Hard = '1' \n  -Easy = '0' \n";
+	label60:
+		std::cout << "\nChoose Difficulty : ";
+		cin.ignore();
+		cin >> diff1;
+		if (!isdigit(diff1))
+		{
+			if (diff1 == '-')
+			{
+				cout << "invalid input\n";
+				cin.ignore();
+				goto label60;
+			}
+			cout << "invalid input please enter a number from 1 to 9\n";
+			goto label60;
+		}
+		diff = diff1 - '0';
+		if (diff == 0)
+		{
+			for (int i = 0; i <= 4; i++)
+			{
+				char select1;
+			label4:
+				std::cout << "\nwhere do you want to put X : ";
+				cin.ignore();
+				cin >> select1;
+				if (!isdigit(select1))
+				{
+					if (select1 == '-')
+					{
+						cout << "invalid input\n";
+						cin.ignore();
+						goto label4;
+					}
+					cout << "invalid input please enter a number from 1 to 9\n";
+					goto label4;
+				}
+				select = select1 - '0';
+				while (select > 9 || select <= 0)
+				{
+					std::cout << "\nInvalid number please try again...\n";
+					std::cout << "\nwhere do you want to put X : ";
+					std::cin >> select;
+					if (select > 0 && select <= 9)
+						break;
+				}
+				if (!change_value(head, 'X', select - 1))
+				{
+					std::cout << "\nReserved place, please try in another location\n";
+					i--;
+					continue;
+				}
+				iscompleted(head);
+				if (i == 4)
+					break;
+				change_value(head, 'O', Easy_difficulty(head) - 1);
+				display(head);
+				iscompleted(head);
+			}
+
+		}
+		else if (diff == 1)
+		{
+
+			int board[9] = { 0,0,0,0,0,0,0,0,0 };
+			//computer squares are 1, player squares are -1.
+		label99:
+			cout << "\n  -Computer: 'O'\n  -You: 'X'\nPlay (1)st or (2)nd? ";
+			int player = 0;
+			char player1;
+			cin.ignore();
+			cin >> player1;
+			if (!isdigit(player1))
+			{
+				if (player1 == '-')
+				{
+					cout << "invalid input\n";
+					cin.ignore();
+					goto label99;
+				}
+				cout << "invalid input please enter a number from 1 to 9\n";
+				goto label99;
+			}
+			player = player1 - '0';
+			cout << "\n";
+			unsigned turn;
+			for (turn = 0; turn < 9 && win(board) == 0; ++turn) {
+				if ((turn + player) % 2 == 0)
+					computerMove(board);
+				else {
+					draw(board);
+					playerMove(board);
+				}
+			}
+			switch (win(board)) {
+			case 0:
+				draw(board);
+				cout << "It's a draw\n";
+				break;
+			case 1:
+				draw(board);
+				cout << "You lose.\n";
+				break;
+			case -1:
+				draw(board);
+				cout << "You win. Horray!\n";
+				break;
+			}
+
+		}
+		else
+		{
+			cout << "Invalid input please enter 0 OR 1 ONLY!\n";
+			goto label60;
+		}
+
+	}
+
+	else if (type == 2)
+	{
+		for (int i = 0; i <= 4; i++)
+		{
+			char select1;
+		label9:
+			std::cout << "\nwhere do you want to put X : ";
+			cin.ignore();
+			cin >> select1;
+			if (!isdigit(select1))
+			{
+				if (select1 == '-')
+				{
+					cout << "invalid input\n";
+					cin.ignore();
+					goto label9;
+				}
+				cout << "invalid input please enter a number from 1 to 9\n";
+				goto label9;
+			}
+			select = select1 - '0';
+			while (select > 9 || select <= 0)
+			{
+				std::cout << "\nInvalid number please try again...\n";
+				std::cout << "\nwhere do you want to put X : ";
+				std::cin >> select;
+				if (select > 0 && select <= 9 && isdigit(select))
+					break;
+			}
+			if (!change_value(head, 'X', select - 1))
+			{
+				std::cout << "\nReserved place, please try in another location\n";
+				i--;
+				continue;
+			}
+			iscompleted(head);
+			display(head);
+			if (i == 4)
+				break;
+		label10:
+			std::cout << "\nwhere do you want to put O : ";
+			cin.ignore();
+			cin >> select1;
+			if (!isdigit(select1))
+			{
+				if (select1 == '-')
+				{
+					cout << "invalid input\n";
+					cin.ignore();
+					goto label10;
+				}
+				cout << "invalid input please enter a number from 1 to 9\n";
+				goto label10;
+			}
+			select = select1 - '0';
+			while (select > 9 || select <= 0)
+			{
+				std::cout << "\nInvalid number please try again...\n";
+				std::cout << "\nwhere do you want to put O : ";
+				std::cin >> select;
+				if (select > 0 && select <= 9)
+					break;
+			}
+
+			while (!change_value(head, 'O', select - 1))
+			{
+				std::cout << "\nReserved place, please try in another location\n";
+				i--;
+				//continue;
+				std::cout << "\nwhere do you want to put O : ";
+				std::cin >> select;
+				if (select > 0 && select <= 9)
+					break;
+
+			}
+
+			change_value(head, 'O', select - 1);
+			iscompleted(head);
+			display(head);
+
+		}
+
+		std::cout << "\n ------------------Draw---------------\n";
+	}
+	else
+	{
+		std::cout << "\nInvalid selection, program terminated...\n\n";
+		//exit(0);
+	}
+
+
+
+
+	//Calculating the Time Execution
+
+	double finish = clock();
+	cout << "\nTime execution : " << (finish - start) / (CLOCKS_PER_SEC) << "\n\n";
+
+
+
+
+	return 0;
+}
